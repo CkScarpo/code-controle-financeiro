@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { hasJSDocParameterTags } from 'typescript';
+
 
 import Home from './pages/Home';
 import Control from './pages/Control';
@@ -8,8 +8,8 @@ import Control from './pages/Control';
 const Routes: React.FC = () => {
   return(
     <Switch>
-        <Route path="/" exact componente={Home} />
-        <Route path="/control" exact componente={Control} />
+        <Route path="/" exact component={Home} />
+        <Route path="/control" exact component={Control} />
     </Switch>
   );
 }
