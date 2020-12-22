@@ -1,3 +1,3 @@
 # Desafio Code - Controle Financeiro
 
-###Projeto com Java, Spring e React.
+### Projeto com Java, Spring e React.
