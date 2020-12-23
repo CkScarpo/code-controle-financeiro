@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom'
 import api from '../../service/api';
-
 
 import moment from 'moment';
 
+import './index.css';
+
 interface IControl {
-  ID: null;
+  id: number;
   description: String;
   date: Date;
   value: number;
@@ -15,6 +17,7 @@ interface IControl {
 const Control: React.FC = () => {
 
   const [control, setControl] = useState<IControl[]>([])
+  const history = useHistory()
 
   useEffect(() => {
     loadControl()
@@ -36,10 +39,21 @@ const Control: React.FC = () => {
     return "R$ " + value.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+\,)/g, "$1.");
   }
 
+  function newControl() {
+    history.push('/control_cadastro')
+  }
+
+  function editControl(id: number) {
+    history.push(`/control_cadastro/${id}`)
+  }
+ 
   return(
     <div className="container">
       <br/>
-      <h1>Controle Financeiro</h1>
+      <div className="control-header">
+        <h1>Controle Financeiro</h1>
+        <Button variant="info" size="lg" onClick={newControl}> Novo </Button>
+      </div>
       <br/>
       <Table striped bordered hover className="text-center">
         <thead>
@@ -54,14 +68,18 @@ const Control: React.FC = () => {
 
           {
             control.map(control => (
-              <tr key={control.ID} className="table-light">
+              <tr key={control.id} className="table-light">
                 <td className="text-left"> { control.description } </td>
                 <td> { formatDate(control.date) } </td>
                 { 
                   control.value >= 0 ? 
-                  <td className="text-info"> { formatValue(control.value) } </td> 
-                  : <td className="text-danger"> { formatValue(control.value) } </td>
+                  <td className="text-info"> { formatValue(control.value) } </td> :
+                  <td className="text-danger"> { formatValue(control.value) } </td>
                 }
+                <td>
+                  <Button size="sm" onClick={() => editControl(control.id)}> Editar </Button> {' '}
+                  <Button size="sm" variant="danger"> Excluir </Button>
+                </td>
               </tr>
             ))
           }
