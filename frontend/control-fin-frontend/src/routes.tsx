@@ -9,8 +9,7 @@ import ControlForm from './pages/Control/Form';
 const Routes: React.FC = () => {
   return(
     <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/control" exact component={Control} />
+        <Route path="/" exact component={Control} />
         <Route path="/control_cadastro" exact component={ControlForm} />
         <Route path="/control_cadastro/:id" exact component={ControlForm} />
     </Switch>

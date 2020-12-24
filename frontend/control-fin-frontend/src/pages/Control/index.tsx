@@ -12,6 +12,7 @@ interface IControl {
   description: String;
   date: Date;
   value: number;
+  condicao: String;
 }
 
 const Control: React.FC = () => {
@@ -31,6 +32,11 @@ const Control: React.FC = () => {
 
   }
 
+  async function deleteControl(id: number) {
+    await api.delete(`/control/${id}`)
+    loadControl()
+  }
+
   function formatDate(date: Date) {
     return moment(date).format("DD/MM/YYYY")
   }
@@ -39,20 +45,21 @@ const Control: React.FC = () => {
     return "R$ " + value.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+\,)/g, "$1.");
   }
 
+  function formatValueDespesa(value: Number) {
+    return "- R$ " + value.toFixed(2).replace('.', ',').replace(/(\d)(?=(\d{3})+\,)/g, "$1.");
+  }
+
   function newControl() {
     history.push('/control_cadastro')
   }
 
-  function editControl(id: number) {
-    history.push(`/control_cadastro/${id}`)
-  }
  
   return(
     <div className="container">
       <br/>
       <div className="control-header">
         <h1>Controle Financeiro</h1>
-        <Button variant="info" size="lg" onClick={newControl}> Novo </Button>
+        <Button variant="primary" size="lg" onClick={newControl}> Novo </Button>
       </div>
       <br/>
       <Table striped bordered hover className="text-center">
@@ -61,7 +68,7 @@ const Control: React.FC = () => {
             <th className="text-dark">Descrição</th>
             <th className="text-dark">Vencimento</th>
             <th className="text-dark">Valor</th>
-            <th className="text-dark">Ações</th>
+            <th className="text-dark">Ação</th>
           </tr>
         </thead>
         <tbody>
@@ -72,13 +79,13 @@ const Control: React.FC = () => {
                 <td className="text-left"> { control.description } </td>
                 <td> { formatDate(control.date) } </td>
                 { 
-                  control.value >= 0 ? 
+                  control.condicao === "Receita" ? 
                   <td className="text-info"> { formatValue(control.value) } </td> :
-                  <td className="text-danger"> { formatValue(control.value) } </td>
+                  <td className="text-danger"> { formatValueDespesa(control.value) } </td>
                 }
                 <td>
-                  <Button size="sm" onClick={() => editControl(control.id)}> Editar </Button> {' '}
-                  <Button size="sm" variant="danger"> Excluir </Button>
+                  <Button size="sm" variant="danger" 
+                    onClick={() => deleteControl(control.id)} > Excluir </Button>
                 </td>
               </tr>
             ))
