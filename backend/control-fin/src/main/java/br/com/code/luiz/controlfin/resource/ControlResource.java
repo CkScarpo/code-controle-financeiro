@@ -27,7 +27,7 @@ public class ControlResource {
         return controlRepository.findAll();
     }
 
-    @GetMapping("/control1/{id}")
+    @GetMapping("/control/{id}")
     public Control_fin listControlUnic(@PathVariable(value = "id") long id) {
         return controlRepository.findById(id);
     }
