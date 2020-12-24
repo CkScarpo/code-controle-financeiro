@@ -2,7 +2,6 @@ package br.com.code.luiz.controlfin.models;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.sql.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,9 +22,11 @@ public class Control_fin implements Serializable {
 
     private String description;
 
-    private Date date;
+    private String date;
 
     private BigDecimal value;
+
+    private String condicao;
 
     public long getId() {
         return id;
@@ -43,11 +44,11 @@ public class Control_fin implements Serializable {
         this.description = description;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -58,5 +59,13 @@ public class Control_fin implements Serializable {
     public void setValue(BigDecimal value) {
         this.value = value;
     }
-     
+
+    public String getCondicao() {
+        return condicao;
+    }
+
+    public void setCondicao(String condicao) {
+        this.condicao = condicao;
+    }
+    
 }
